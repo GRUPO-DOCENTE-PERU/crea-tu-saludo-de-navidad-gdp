@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Feliz Navidad – Grupo Docente Perú</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta property="og:title" content="Feliz Navidad – Grupo Docente Perú" />
+<meta property="og:description" content="Un saludo navideño para los docentes del Perú." />
+<meta property="og:image" content="./preview.jpg" />
+<meta property="og:type" content="website" />
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --azul1:#0b3c8c;
+  --azul2:#1e5fbf;
+  --dorado:#d4af37;
+  --rojo:#b71c1c;
+  --verde:#1b5e20;
+}
+
+body{
+  margin:0;
+  background:linear-gradient(var(--azul2),var(--azul1));
+  color:white;
+  font-family:system-ui;
+  min-height:100vh;
+  overflow:hidden;
+}
+
+.card{
+  max-width:560px;
+  margin:auto;
+  padding:20px 20px 20px 20px;
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+
+h1{
+  font-family:'Great Vibes', cursive;
+  color:var(--dorado);
+  font-size:clamp(3.5rem,10vw,4.2rem);
+  margin-bottom:24px;
+}
+
+p{font-size:1.15rem;line-height:1.6}
+
+.saludo-principal{
+  font-size:clamp(1.4rem,5vw,2.2rem);
+  font-weight:700;
+  line-height:1.4;
+}
+
+input,button{
+  width:90%;
+  padding:16px;
+  border-radius:12px;
+  border:none;
+  margin-top:14px;
+  font-size:1.1rem;
+}
+
+button{background:var(--dorado);font-weight:600}
+.secondary{background:white;color:var(--azul1)}
+
+.logo{width:150px;margin-top:36px;opacity:.9}
+
+/* Adornos superiores */
+.top-decor{
+  position:fixed;
+  top:0;left:0;width:100%;
+  height:140px;
+  background:url("top-decor.png") repeat-x center;
+  background-size:contain;
+  z-index:1;
+}
+
+/* Copos */
+.snowflake{
+  position:fixed;top:-10px;
+  color:white;opacity:.9;
+  animation:fall linear infinite;
+  z-index:0;
+}
+
+@keyframes fall{to{transform:translateY(110vh)}}
+</style>
+</head>
+
+<body>
+
+<div class="top-decor"></div>
+
+<div class="card">
+<h1>Feliz Navidad</h1>
+<div id="content"></div>
+
+<img src="logopng.png" class="logo">
+<p style="opacity:.75;font-size:.9rem"><i>¡Sigamos edificando juntos!</i></p>
+</div>
+
+<script>
+const p=new URLSearchParams(location.search);
+const n=p.get("n");
+const c=document.getElementById("content");
+
+if(n){
+c.innerHTML=`
+<p class="saludo-principal"><b>¡${n}</b> te desea una Feliz Navidad!</p>
+<p>En estas fiestas celebramos el compromiso y la dedicación de cada docente del Perú.</p>
+<button onclick="share()">Compartir saludo</button>
+<button class="secondary" onclick="location.href='/'">Crear mi saludo</button>
+`;
+}else{
+c.innerHTML=`
+<p>En estas fiestas celebramos el compromiso y la dedicación de cada docente del Perú.</p>
+<input id="nombre" placeholder="Escribe tu nombre">
+<button onclick="create()">Crear saludo</button>
+`;
+}
+
+function create(){
+const v=document.getElementById("nombre").value.trim();
+if(v)location.href="?n="+encodeURIComponent(v);
+}
+
+function share(){
+location.href="https://wa.me/?text="+encodeURIComponent(`${n} te desea una Feliz Navidad.\n${location.href}`);
+}
+
+/* Copos */
+for(let i=0;i<35;i++){
+const s=document.createElement("div");
+s.className="snowflake";
+s.innerHTML="❄";
+s.style.left=Math.random()*100+"vw";
+s.style.fontSize=(Math.random()*20+12)+"px";
+s.style.animationDuration=(Math.random()*6+6)+"s";
+document.body.appendChild(s);
+}
+</script>
+
+</body>
+</html>
